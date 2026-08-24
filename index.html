@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Go Button Forest</title>
+
+<style>
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #ea9a99;
+}
+
+canvas {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<canvas id="forest"></canvas>
+
+
+<script>
+
+
+// =====================================================
+// CANVAS
+// =====================================================
+
+const canvas =
+    document.getElementById("forest");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+function resizeCanvas() {
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+    canvas.width =
+        window.innerWidth * dpr;
+
+    canvas.height =
+        window.innerHeight * dpr;
+
+    canvas.style.width =
+        window.innerWidth + "px";
+
+    canvas.style.height =
+        window.innerHeight + "px";
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+}
+
+
+resizeCanvas();
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+
+// =====================================================
+// COLOUR PALETTE
+// =====================================================
+
+const colours = [
+
+    "#f4cbcc",
+
+    "#d9ead3",
+
+    "#fff2cc",
+
+    "#c9daf8"
+
+];
+
+
+
+// =====================================================
+// SETTINGS
+// =====================================================
+
+const ARROW_COUNT = 150;
+
+const EXTRA_LENGTH = 900;
+
+const FOREST_HEIGHT = 2400;
+
+
+
+// =====================================================
+// CREATE ARROW
+// =====================================================
+
+function createArrow() {
+
+    return {
+
+        side:
+            Math.random() < 0.5
+            ? "left"
+            : "right",
+
+
+        position:
+            Math.random() *
+            FOREST_HEIGHT,
+
+
+        depth:
+            Math.random(),
+
+
+        length:
+            700 +
+            Math.random() * 1000,
+
+
+        width:
+            30 +
+            Math.random() * 30,
+
+
+        headSize:
+            55 +
+            Math.random() * 45,
+
+
+        angle:
+            -0.16 +
+            Math.random() * 0.32,
+
+
+        colour:
+            colours[
+                Math.floor(
+                    Math.random() *
+                    colours.length
+                )
+            ]
+
+    };
+
+}
+
+
+
+// =====================================================
+// CREATE FOREST
+// =====================================================
+
+const arrows = [];
+
+
+for (
+    let i = 0;
+    i < ARROW_COUNT;
+    i++
+) {
+
+    arrows.push(
+        createArrow()
+    );
+
+}
+
+
+
+// =====================================================
+// SCROLL SYSTEM
+// =====================================================
+
+let scrollPosition = 0;
+
+let targetScroll = 0;
+
+
+window.addEventListener(
+    "wheel",
+    function(event) {
+
+        targetScroll +=
+            event.deltaY;
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+
+// =====================================================
+// DRAW ONE ARROW
+// =====================================================
+
+function drawArrow(arrow) {
+
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+
+    const depth =
+        arrow.depth;
+
+
+    const speed =
+        0.12 +
+        depth * 1.20;
+
+
+    const scale =
+        0.45 +
+        depth * 1.25;
+
+
+    const length =
+        arrow.length *
+        scale;
+
+
+    const lineWidth =
+        arrow.width *
+        scale;
+
+
+    const headSize =
+        arrow.headSize *
+        scale;
+
+
+
+    // ---------------------------------------------
+    // VERTICAL POSITION
+    // ---------------------------------------------
+
+    let y =
+        arrow.position +
+        scrollPosition *
+        speed;
+
+
+
+    // ---------------------------------------------
+    // WRAP
+    // ---------------------------------------------
+
+    const wrap =
+        FOREST_HEIGHT +
+        height +
+        1000;
+
+
+    y =
+        (
+            y % wrap +
+            wrap
+        ) % wrap;
+
+
+    y -=
+        500;
+
+
+
+    // ---------------------------------------------
+    // OFF-SCREEN CHECK
+    // ---------------------------------------------
+
+    if (
+        y < -1000 ||
+        y > height + 1000
+    ) {
+
+        return;
+
+    }
+
+
+
+    // ---------------------------------------------
+    // HORIZONTAL START
+    // ---------------------------------------------
+
+    let x;
+
+
+    if (
+        arrow.side === "left"
+    ) {
+
+        x =
+            -EXTRA_LENGTH;
+
+    }
+
+    else {
+
+        x =
+            width +
+            EXTRA_LENGTH;
+
+    }
+
+
+
+    // ---------------------------------------------
+    // DRAW
+    // ---------------------------------------------
+
+    ctx.save();
+
+
+    ctx.translate(
+        x,
+        y
+    );
+
+
+    if (
+        arrow.side === "right"
+    ) {
+
+        ctx.rotate(
+            Math.PI
+        );
+
+    }
+
+
+    ctx.rotate(
+        arrow.angle
+    );
+
+
+    // ---------------------------------------------
+    // FULL OPACITY
+    // ---------------------------------------------
+
+    ctx.globalAlpha = 1;
+
+
+    ctx.fillStyle =
+        arrow.colour;
+
+
+    ctx.strokeStyle =
+        arrow.colour;
+
+
+
+    // ---------------------------------------------
+    // SHAFT
+    // ---------------------------------------------
+
+    ctx.lineWidth =
+        lineWidth;
+
+
+    ctx.lineCap =
+        "butt";
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        0,
+        0
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize * 0.65,
+        0
+    );
+
+
+    ctx.stroke();
+
+
+
+    // ---------------------------------------------
+    // SOLID ARROWHEAD
+    // ---------------------------------------------
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        length,
+        0
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize,
+        -headSize
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize,
+        headSize
+    );
+
+
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+
+// =====================================================
+// DRAW FOREST
+// =====================================================
+
+function drawForest() {
+
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+
+    // ---------------------------------------------
+    // BACKGROUND
+    // ---------------------------------------------
+
+    ctx.fillStyle =
+        "#ea9a99";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+
+    // ---------------------------------------------
+    // FAR → NEAR
+    // ---------------------------------------------
+
+    arrows.sort(
+        function(a, b) {
+
+            return (
+                a.depth -
+                b.depth
+            );
+
+        }
+    );
+
+
+
+    for (
+        const arrow of arrows
+    ) {
+
+        drawArrow(
+            arrow
+        );
+
+    }
+
+}
+
+
+
+// =====================================================
+// ANIMATION LOOP
+// =====================================================
+
+function animationLoop() {
+
+
+    scrollPosition +=
+        (
+            targetScroll -
+            scrollPosition
+        ) * 0.14;
+
+
+    drawForest();
+
+
+    requestAnimationFrame(
+        animationLoop
+    );
+
+}
+
+
+animationLoop();
+
+
+</script>
+
+
+</body>
+
+</html>
