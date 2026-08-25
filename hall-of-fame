@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Hall of Fame — Go Button music</title>
+
+
+<style>
+
+/* =====================================================
+   GLOBAL
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+
+    min-height: 100%;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #ea9a99;
+
+    color: #000000;
+}
+
+
+body {
+
+    overflow-x: hidden;
+
+    min-height: 100000px;
+}
+
+
+/* =====================================================
+   ARROW FOREST
+   ===================================================== */
+
+#forest {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 0;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   WEBSITE LAYER
+   ===================================================== */
+
+#site {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+
+nav {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 28px;
+
+    background: #ffffff;
+
+    transition:
+        transform 0.35s ease,
+        opacity 0.35s ease;
+}
+
+
+nav.hidden {
+
+    transform:
+        translateY(-110%);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+}
+
+
+.nav-links a {
+
+    color: #000000;
+
+    background: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    padding: 4px 7px;
+}
+
+
+.nav-links a:hover {
+
+    background: #000000;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   MAIN
+   ===================================================== */
+
+main {
+
+    width: 100%;
+
+    padding:
+        120px 20px 500px;
+}
+
+
+/* =====================================================
+   INTRODUCTION
+   ===================================================== */
+
+.intro {
+
+    width:
+        calc(100% - 30px);
+
+    max-width: 650px;
+
+    margin:
+        25px auto 0;
+}
+
+
+.intro-title {
+
+    display: table;
+
+    margin:
+        0 auto 50px;
+
+    padding:
+        7px 13px;
+
+    background: #ffffff;
+
+    color: #000000;
+
+    font-size:
+        clamp(
+            32px,
+            5vw,
+            58px
+        );
+
+    line-height: 1;
+
+    font-weight: normal;
+}
+
+
+.intro-text {
+
+    background: #ffffff;
+
+    color: #000000;
+
+    padding:
+        20px 24px;
+
+    font-size: 17px;
+
+    line-height: 1.55;
+
+    text-align: justify;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    nav {
+
+        padding:
+            15px;
+    }
+
+
+    .nav-links {
+
+        gap:
+            8px;
+    }
+
+
+    .nav-links a {
+
+        font-size:
+            13px;
+    }
+
+
+    main {
+
+        padding:
+            100px 15px 400px;
+    }
+
+
+    .intro {
+
+        width:
+            calc(100% - 10px);
+    }
+
+
+    .intro-title {
+
+        font-size:
+            36px;
+
+        margin-bottom:
+            45px;
+    }
+
+
+    .intro-text {
+
+        padding:
+            16px 18px;
+
+        font-size:
+            16px;
+
+        line-height:
+            1.5;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================
+     ARROW FOREST
+     =================================================== -->
+
+<canvas id="forest"></canvas>
+
+
+<!-- ===================================================
+     WEBSITE
+     =================================================== -->
+
+<div id="site">
+
+
+<!-- ===================================================
+     NAVIGATION
+     =================================================== -->
+
+<nav id="main-nav">
+
+    <div class="nav-links">
+
+        <a href="./index.html">
+            HOME
+        </a>
+
+        <a href="./play-with-us.html">
+            PLAY WITH US
+        </a>
+
+        <a href="./safer-spaces.html">
+            SAFER SPACES
+        </a>
+
+        <a href="./about.html">
+            ABOUT
+        </a>
+
+        <a href="./hall-of-fame.html">
+            HALL OF FAME
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ===================================================
+     MAIN CONTENT
+     =================================================== -->
+
+<main>
+
+
+<section class="intro">
+
+
+    <h1 class="intro-title">
+        HALL OF FAME
+    </h1>
+
+
+    <div class="intro-text">
+
+        Whether big or small, one of the many ways of saying
+        thank you to the artists we've worked with in past is
+        that we take their name and attach them to an arrow.
+        Maybe you'll find someone you recognise, maybe they'll be
+        someone you've never heard of before. Each name has a 1%
+        chance of being attached to an arrow, so feel free to
+        scroll through and have a look.
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   CANVAS SETUP
+   ===================================================== */
+
+const canvas =
+    document.getElementById("forest");
+
+
+const ctx =
+    canvas.getContext("2d");
+
+
+function resizeCanvas() {
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        window.innerWidth * dpr;
+
+
+    canvas.height =
+        window.innerHeight * dpr;
+
+
+    canvas.style.width =
+        window.innerWidth + "px";
+
+
+    canvas.style.height =
+        window.innerHeight + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+}
+
+
+resizeCanvas();
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+/* =====================================================
+   ARROW COLOURS
+   ===================================================== */
+
+const colours = [
+
+    "#f4cbcc",
+    "#d9ead3",
+    "#fff2cc",
+    "#c9daf8"
+
+];
+
+
+/* =====================================================
+   GOOGLE SHEETS
+   ===================================================== */
+
+/*
+   This is the published CSV version of the
+   Hall of Fame artist list.
+
+   The Google Sheet itself remains the place
+   where you edit the artists.
+*/
+
+const SHEET_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vROCpvGvyzvKRuWzaHYeo6y0mYfdvpEOnctgL0HM26KjWEPy7PAl16ChP0IT2MD6pTxt2mJ0hH0x40s/pub?gid=1402967077&single=true&output=csv";
+
+
+/*
+   Artists will be loaded into this array.
+*/
+
+let artists = [];
+
+
+/* =====================================================
+   LOAD ARTISTS
+   ===================================================== */
+
+async function loadArtists() {
+
+    try {
+
+        const response =
+            await fetch(
+                SHEET_URL
+            );
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "Could not connect to Google Sheets."
+            );
+
+        }
+
+
+        const csv =
+            await response.text();
+
+
+        /*
+           Split CSV into rows.
+        */
+
+        const rows =
+            csv
+                .split(/\r?\n/)
+                .map(
+                    row => row.trim()
+                )
+                .filter(
+                    row => row !== ""
+                );
+
+
+        /*
+           First row is the heading.
+           Everything below it is an artist.
+        */
+
+        artists = [];
+
+
+        rows
+            .slice(1)
+            .forEach(
+                function(row) {
+
+                    /*
+                       Remove surrounding quotes
+                       if Google has added them.
+                    */
+
+                    let name =
+                        row
+                            .replace(
+                                /^"|"$/g,
+                                ""
+                            )
+                            .trim();
+
+
+                    /*
+                       Ignore empty cells.
+                    */
+
+                    if (
+                        name !== ""
+                    ) {
+
+                        artists.push(
+                            name
+                        );
+
+                    }
+
+                }
+            );
+
+
+        /*
+           Rebuild the arrows now that
+           the artist list is available.
+        */
+
+        buildForest();
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Google Sheets error:",
+            error
+        );
+
+
+        /*
+           If the sheet cannot be reached,
+           still build the forest so the
+           page itself continues working.
+        */
+
+        artists = [];
+
+
+        buildForest();
+
+    }
+
+}
+
+
+/* =====================================================
+   FOREST SETTINGS
+   ===================================================== */
+
+const ARROW_COUNT =
+    1200;
+
+
+/*
+   How long the journey is.
+*/
+
+const FOREST_HEIGHT =
+    100000;
+
+
+/*
+   How far arrows begin outside
+   the visible screen.
+*/
+
+const EXTRA_LENGTH =
+    3500;
+
+
+/* =====================================================
+   CREATE ARROW
+   ===================================================== */
+
+function createArrow(
+    forceArtist = false,
+    earlyArtist = false
+) {
+
+
+    let artist =
+        null;
+
+
+    /* =================================================
+       GUARANTEED ARTIST
+       ================================================= */
+
+    if (
+        forceArtist &&
+        artists.length > 0
+    ) {
+
+        const randomArtist =
+            Math.floor(
+                Math.random() *
+                artists.length
+            );
+
+
+        artist =
+            artists[
+                randomArtist
+            ];
+
+    }
+
+
+    /* =================================================
+       NORMAL ARTIST CHANCE
+       ================================================= */
+
+    else if (
+        artists.length > 0
+    ) {
+
+
+        /*
+           EVERY ARTIST HAS THEIR OWN 1% CHANCE.
+
+           Example:
+
+           3 artists
+           = roughly 3% of arrows named.
+
+           10 artists
+           = roughly 10% of arrows named.
+
+           100 artists
+           = roughly 100% of arrows named.
+        */
+
+        for (
+            const possibleArtist
+            of artists
+        ) {
+
+            if (
+                Math.random() < 0.01
+            ) {
+
+                artist =
+                    possibleArtist;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    /* =================================================
+       POSITION
+       ================================================= */
+
+    let position =
+        Math.random()
+        * FOREST_HEIGHT;
+
+
+    /*
+       Put the guaranteed artist
+       somewhere early in the journey.
+    */
+
+    if (
+        earlyArtist
+    ) {
+
+        position =
+            2500 +
+            Math.random() * 4000;
+
+    }
+
+
+    /* =================================================
+       RETURN ARROW
+       ================================================= */
+
+    return {
+
+        side:
+            Math.random() < 0.5
+            ? "left"
+            : "right",
+
+
+        position:
+            position,
+
+
+        depth:
+            Math.random(),
+
+
+        length:
+            1500 +
+            Math.random() * 3500,
+
+
+        width:
+            30 +
+            Math.random() * 30,
+
+
+        headSize:
+            65 +
+            Math.random() * 55,
+
+
+        angle:
+            -0.16 +
+            Math.random() * 0.32,
+
+
+        colour:
+            colours[
+                Math.floor(
+                    Math.random()
+                    * colours.length
+                )
+            ],
+
+
+        artist:
+            artist
+
+    };
+
+}
+
+
+/* =====================================================
+   BUILD FOREST
+   ===================================================== */
+
+let arrows = [];
+
+
+function buildForest() {
+
+    arrows = [];
+
+
+    /*
+       GUARANTEED NAMED ARROW
+
+       This is placed early in the forest
+       so visitors don't have to scroll
+       forever before seeing one.
+    */
+
+    if (
+        artists.length > 0
+    ) {
+
+        arrows.push(
+            createArrow(
+                true,
+                true
+            )
+        );
+
+    }
+
+
+    /*
+       CREATE ALL REMAINING ARROWS.
+
+       Each artist has an independent
+       1% chance per arrow.
+    */
+
+    const startIndex =
+        arrows.length;
+
+
+    for (
+        let i = startIndex;
+        i < ARROW_COUNT;
+        i++
+    ) {
+
+        arrows.push(
+            createArrow(
+                false,
+                false
+            )
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   DRAW ARROW
+   ===================================================== */
+
+function drawArrow(
+    arrow,
+    forestScroll
+) {
+
+
+    const screenWidth =
+        window.innerWidth;
+
+
+    const screenHeight =
+        window.innerHeight;
+
+
+    /* =================================================
+       PARALLAX
+       ================================================= */
+
+    const parallax =
+        0.08 +
+        arrow.depth * 0.62;
+
+
+    /* =================================================
+       SCALE
+       ================================================= */
+
+    const scale =
+        0.45 +
+        arrow.depth * 1.25;
+
+
+    const length =
+        arrow.length *
+        scale;
+
+
+    const lineWidth =
+        arrow.width *
+        scale;
+
+
+    const headSize =
+        arrow.headSize *
+        scale;
+
+
+    /* =================================================
+       VERTICAL POSITION
+       ================================================= */
+
+    let y =
+        arrow.position -
+        forestScroll *
+        parallax;
+
+
+    /* =================================================
+       WRAPPING
+       ================================================= */
+
+    const wrap =
+        FOREST_HEIGHT +
+        screenHeight +
+        10000;
+
+
+    y =
+        (
+            y % wrap +
+            wrap
+        ) % wrap;
+
+
+    y -= 5000;
+
+
+    /* =================================================
+       VISIBILITY
+       ================================================= */
+
+    if (
+        y < -5000 ||
+        y >
+        screenHeight + 5000
+    ) {
+
+        return;
+
+    }
+
+
+    /* =================================================
+       HORIZONTAL POSITION
+       ================================================= */
+
+    let x;
+
+
+    if (
+        arrow.side === "left"
+    ) {
+
+        x =
+            -EXTRA_LENGTH;
+
+    }
+
+    else {
+
+        x =
+            screenWidth +
+            EXTRA_LENGTH;
+
+    }
+
+
+    /* =================================================
+       SAVE
+       ================================================= */
+
+    ctx.save();
+
+
+    ctx.translate(
+        x,
+        y
+    );
+
+
+    const isRight =
+        arrow.side === "right";
+
+
+    /*
+       Mirror right-side arrows.
+
+       The arrow itself therefore travels
+       from right to left.
+    */
+
+    if (
+        isRight
+    ) {
+
+        ctx.scale(
+            -1,
+            1
+        );
+
+    }
+
+
+    /*
+       Rotate arrow.
+    */
+
+    ctx.rotate(
+        arrow.angle
+    );
+
+
+    /* =================================================
+       COLOUR
+       ================================================= */
+
+    ctx.fillStyle =
+        arrow.colour;
+
+
+    ctx.strokeStyle =
+        arrow.colour;
+
+
+    ctx.globalAlpha =
+        1;
+
+
+    /* =================================================
+       SHAFT
+       ================================================= */
+
+    ctx.lineWidth =
+        lineWidth;
+
+
+    ctx.lineCap =
+        "butt";
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        0,
+        0
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize * 0.65,
+        0
+    );
+
+
+    ctx.stroke();
+
+
+    /* =================================================
+       ARROWHEAD
+       ================================================= */
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        length,
+        0
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize,
+        -headSize
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize,
+        headSize
+    );
+
+
+    ctx.closePath();
+
+
+    /*
+       IMPORTANT:
+
+       The arrowhead uses the exact same
+       colour as the shaft.
+
+       The artist highlight is drawn later,
+       away from the arrowhead.
+    */
+
+    ctx.fill();
+
+
+    /* =================================================
+       ARTIST NAME
+       ================================================= */
+
+    if (
+        arrow.artist !== null
+    ) {
+
+
+        /*
+           Position the name well before
+           the arrowhead.
+
+           This is measured from the
+           arrow's own direction.
+        */
+
+        const textX =
+            length -
+            headSize -
+            260;
+
+
+        /* ---------------------------------------------
+           FONT
+           --------------------------------------------- */
+
+        ctx.font =
+            "bold 18px Arial";
+
+
+        ctx.textAlign =
+            "center";
+
+
+        ctx.textBaseline =
+            "middle";
+
+
+        /* ---------------------------------------------
+           MEASURE TEXT
+           --------------------------------------------- */
+
+        const textWidth =
+            ctx.measureText(
+                arrow.artist
+            ).width;
+
+
+        const boxWidth =
+            textWidth + 28;
+
+
+        const boxHeight =
+            42;
+
+
+        /* ---------------------------------------------
+           SAVE TEXT STATE
+           --------------------------------------------- */
+
+        ctx.save();
+
+
+        /*
+           RIGHT-SIDE FIX
+
+           The arrow is mirrored.
+
+           We cancel that mirror for the
+           text so the artist name reads
+           normally.
+
+           Because the arrow is travelling
+           leftwards, the text position must
+           also be mirrored to the negative
+           side of the origin.
+        */
+
+        if (
+            isRight
+        ) {
+
+            ctx.scale(
+                -1,
+                1
+            );
+
+        }
+
+
+        const visibleTextX =
+            isRight
+            ? -textX
+            : textX;
+
+
+        /* ---------------------------------------------
+           WHITE HIGHLIGHT
+           --------------------------------------------- */
+
+        ctx.fillStyle =
+            "#ffffff";
+
+
+        ctx.fillRect(
+
+            visibleTextX -
+            boxWidth / 2,
+
+            -boxHeight / 2,
+
+            boxWidth,
+
+            boxHeight
+
+        );
+
+
+        /* ---------------------------------------------
+           TEXT
+           --------------------------------------------- */
+
+        ctx.fillStyle =
+            "#000000";
+
+
+        ctx.fillText(
+
+            arrow.artist,
+
+            visibleTextX,
+
+            0
+
+        );
+
+
+        ctx.restore();
+
+    }
+
+
+    /* =================================================
+       RESTORE
+       ================================================= */
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW FOREST
+   ===================================================== */
+
+function drawForest() {
+
+
+    const screenWidth =
+        window.innerWidth;
+
+
+    const screenHeight =
+        window.innerHeight;
+
+
+    /* =================================================
+       BACKGROUND
+       ================================================= */
+
+    ctx.fillStyle =
+        "#ea9a99";
+
+
+    ctx.fillRect(
+
+        0,
+        0,
+
+        screenWidth,
+        screenHeight
+
+    );
+
+
+    /* =================================================
+       SCROLL
+       ================================================= */
+
+    const pageScroll =
+        window.scrollY;
+
+
+    /* =================================================
+       DEPTH ORDER
+       ================================================= */
+
+    arrows.sort(
+        function(a, b) {
+
+            return (
+                a.depth -
+                b.depth
+            );
+
+        }
+    );
+
+
+    /* =================================================
+       DRAW
+       ================================================= */
+
+    for (
+        const arrow of arrows
+    ) {
+
+        drawArrow(
+            arrow,
+            pageScroll
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ANIMATION LOOP
+   ===================================================== */
+
+function animationLoop() {
+
+    drawForest();
+
+
+    requestAnimationFrame(
+        animationLoop
+    );
+
+}
+
+
+animationLoop();
+
+
+/* =====================================================
+   NAVIGATION VISIBILITY
+   ===================================================== */
+
+const nav =
+    document.getElementById(
+        "main-nav"
+    );
+
+
+let lastScroll =
+    window.scrollY;
+
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+
+        const currentScroll =
+            window.scrollY;
+
+
+        /* ---------------------------------------------
+           TOP
+           --------------------------------------------- */
+
+        if (
+            currentScroll <= 20
+        ) {
+
+            nav.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        /* ---------------------------------------------
+           DOWN
+           --------------------------------------------- */
+
+        else if (
+            currentScroll >
+            lastScroll
+        ) {
+
+            nav.classList.add(
+                "hidden"
+            );
+
+        }
+
+
+        /* ---------------------------------------------
+           UP
+           --------------------------------------------- */
+
+        else {
+
+            nav.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        lastScroll =
+            currentScroll;
+
+    }
+
+
+);
+
+
+/* =====================================================
+   START GOOGLE SHEET CONNECTION
+   ===================================================== */
+
+loadArtists();
+
+
+</script>
+
+
+</body>
+
+</html>
