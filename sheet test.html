@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Go Button — Sheet Test</title>
+
+<style>
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ea9a99;
+    padding: 40px;
+}
+
+h1,
+#status,
+#artists {
+    background: #ffffff;
+    padding: 15px;
+}
+
+#artists {
+    margin-top: 20px;
+    max-width: 500px;
+}
+
+.artist {
+    padding: 8px 0;
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h1>HALL OF FAME TEST</h1>
+
+<div id="status">
+    Connecting...
+</div>
+
+<div id="artists"></div>
+
+
+<script>
+
+
+const sheetURL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vROCpvGvyzvKRuWzaHYeo6y0mYfdvpEOnctgL0HM26KjWEPy7PAl16ChP0IT2MD6pTxt2mJ0hH0x40s/gviz/tq?tqx=out:json&gid=1402967077";
+
+
+async function loadArtists() {
+
+    try {
+
+        const response =
+            await fetch(sheetURL);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Google Sheets returned an error."
+            );
+
+        }
+
+
+        const text =
+            await response.text();
+
+
+        /*
+         * Google wraps the JSON response
+         * in a small function call.
+         *
+         * Remove that wrapper.
+         */
+
+        const jsonText =
+            text
+                .replace(
+                    "/*O_o*/",
+                    ""
+                )
+                .replace(
+                    /google\.visualization\.Query\.setResponse\(/,
+                    ""
+                )
+                .replace(
+                    /\);$/,
+                    ""
+                );
+
+
+        const data =
+            JSON.parse(jsonText);
+
+
+        const rows =
+            data.table.rows;
+
+
+        const artists = [];
+
+
+        rows.forEach(
+            function(row) {
+
+                if (
+                    row.c &&
+                    row.c[0] &&
+                    row.c[0].v
+                ) {
+
+                    const name =
+                        String(
+                            row.c[0].v
+                        ).trim();
+
+
+                    if (
+                        name &&
+                        name.toLowerCase()
+                        !== "artist"
+                    ) {
+
+                        artists.push(name);
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "status"
+        ).textContent =
+            "SUCCESS — " +
+            artists.length +
+            " artist(s) found.";
+
+
+        const container =
+            document.getElementById(
+                "artists"
+            );
+
+
+        container.innerHTML = "";
+
+
+        artists.forEach(
+            function(artist) {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "artist";
+
+
+                div.textContent =
+                    artist;
+
+
+                container.appendChild(
+                    div
+                );
+
+            }
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "status"
+        ).textContent =
+            "ERROR — " +
+            error.message;
+
+    }
+
+}
+
+
+loadArtists();
+
+
+</script>
+
+</body>
+
+</html>
