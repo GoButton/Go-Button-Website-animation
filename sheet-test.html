@@ -12,6 +12,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: #ea9a99;
+    color: #000000;
     padding: 40px;
 }
 
@@ -42,7 +43,7 @@ h1,
 <h1>HALL OF FAME TEST</h1>
 
 <div id="status">
-    Connecting...
+    Connecting to Google Sheets...
 </div>
 
 <div id="artists"></div>
@@ -52,7 +53,7 @@ h1,
 
 
 const sheetURL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vROCpvGvyzvKRuWzaHYeo6y0mYfdvpEOnctgL0HM26KjWEPy7PAl16ChP0IT2MD6pTxt2mJ0hH0x40s/gviz/tq?tqx=out:json&gid=1402967077";
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vROCpvGvyzvKRuWzaHYeo6y0mYfdvpEOnctgL0HM26KjWEPy7PAl16ChP0IT2MD6pTxt2mJ0hH0x40s/pub?gid=1402967077&single=true&output=csv";
 
 
 async function loadArtists() {
@@ -72,74 +73,62 @@ async function loadArtists() {
         }
 
 
-        const text =
+        const csv =
             await response.text();
 
 
         /*
-         * Google wraps the JSON response
-         * in a small function call.
-         *
-         * Remove that wrapper.
+         * Split the CSV into rows.
          */
 
-        const jsonText =
-            text
-                .replace(
-                    "/*O_o*/",
-                    ""
-                )
-                .replace(
-                    /google\.visualization\.Query\.setResponse\(/,
-                    ""
-                )
-                .replace(
-                    /\);$/,
-                    ""
-                );
-
-
-        const data =
-            JSON.parse(jsonText);
-
-
         const rows =
-            data.table.rows;
+            csv
+                .split(/\r?\n/)
+                .map(
+                    row => row.trim()
+                )
+                .filter(
+                    row => row !== ""
+                );
 
 
         const artists = [];
 
 
-        rows.forEach(
+        /*
+         * The first row is the heading.
+         *
+         * Everything underneath it
+         * is an artist.
+         */
+
+        rows.slice(1).forEach(
             function(row) {
 
+                const name =
+                    row
+                        .replace(
+                            /^"|"$/g,
+                            ""
+                        )
+                        .trim();
+
+
                 if (
-                    row.c &&
-                    row.c[0] &&
-                    row.c[0].v
+                    name
                 ) {
 
-                    const name =
-                        String(
-                            row.c[0].v
-                        ).trim();
-
-
-                    if (
-                        name &&
-                        name.toLowerCase()
-                        !== "artist"
-                    ) {
-
-                        artists.push(name);
-
-                    }
+                    artists.push(name);
 
                 }
 
             }
         );
 
+
+        /*
+         * SUCCESS
+         */
 
         document.getElementById(
             "status"
@@ -148,6 +137,10 @@ async function loadArtists() {
             artists.length +
             " artist(s) found.";
 
+
+        /*
+         * DISPLAY ARTISTS
+         */
 
         const container =
             document.getElementById(
