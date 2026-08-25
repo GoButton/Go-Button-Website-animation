@@ -473,11 +473,10 @@ const colours = [
    ===================================================== */
 
 /*
-   This is the published CSV version of the
-   Hall of Fame artist list.
+   Published CSV version of the Hall of Fame
+   artist list.
 
-   The Google Sheet itself remains the place
-   where you edit the artists.
+   The Google Sheet is the master list.
 */
 
 const SHEET_URL =
@@ -485,7 +484,7 @@ const SHEET_URL =
 
 
 /*
-   Artists will be loaded into this array.
+   Artists loaded from Google Sheets.
 */
 
 let artists = [];
@@ -537,7 +536,7 @@ async function loadArtists() {
 
         /*
            First row is the heading.
-           Everything below it is an artist.
+           Everything underneath it is an artist.
         */
 
         artists = [];
@@ -547,11 +546,6 @@ async function loadArtists() {
             .slice(1)
             .forEach(
                 function(row) {
-
-                    /*
-                       Remove surrounding quotes
-                       if Google has added them.
-                    */
 
                     let name =
                         row
@@ -581,14 +575,14 @@ async function loadArtists() {
 
 
         /*
-           Rebuild the arrows now that
-           the artist list is available.
+           Rebuild the forest once
+           the artists are available.
         */
 
         buildForest();
 
-
     }
+
 
     catch (error) {
 
@@ -599,9 +593,8 @@ async function loadArtists() {
 
 
         /*
-           If the sheet cannot be reached,
-           still build the forest so the
-           page itself continues working.
+           The visual forest still works
+           if Google Sheets is unavailable.
         */
 
         artists = [];
@@ -623,7 +616,7 @@ const ARROW_COUNT =
 
 
 /*
-   How long the journey is.
+   Length of the scrolling journey.
 */
 
 const FOREST_HEIGHT =
@@ -637,6 +630,100 @@ const FOREST_HEIGHT =
 
 const EXTRA_LENGTH =
     3500;
+
+
+/* =====================================================
+   BACKGROUND AUTO-SCROLL
+   ===================================================== */
+
+/*
+   This moves the arrow forest without
+   actually moving the webpage.
+
+   The page itself stays still.
+*/
+
+let autoScroll =
+    0;
+
+
+/*
+   Very gentle movement.
+
+   Increase this number if you want
+   the arrows to drift faster.
+*/
+
+const AUTO_SCROLL_SPEED =
+    0.06;
+
+
+/*
+   Used to temporarily pause the
+   automatic movement while the visitor
+   is actively scrolling.
+*/
+
+let scrolling =
+    false;
+
+
+let scrollTimeout;
+
+
+/* =====================================================
+   DETECT USER SCROLLING
+   ===================================================== */
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+        scrolling =
+            true;
+
+
+        clearTimeout(
+            scrollTimeout
+        );
+
+
+        scrollTimeout =
+            setTimeout(
+                function() {
+
+                    scrolling =
+                        false;
+
+                },
+                150
+            );
+
+    }
+);
+
+
+/* =====================================================
+   UPDATE AUTO-SCROLL
+   ===================================================== */
+
+function updateAutoScroll() {
+
+    /*
+       Only move automatically when the
+       visitor isn't actively scrolling.
+    */
+
+    if (
+        !scrolling
+    ) {
+
+        autoScroll +=
+            AUTO_SCROLL_SPEED;
+
+    }
+
+}
 
 
 /* =====================================================
@@ -687,18 +774,14 @@ function createArrow(
 
 
         /*
-           EVERY ARTIST HAS THEIR OWN 1% CHANCE.
+           EACH ARTIST HAS AN INDEPENDENT
+           1% CHANCE OF APPEARING.
 
-           Example:
+           3 artists = roughly 3%.
 
-           3 artists
-           = roughly 3% of arrows named.
+           10 artists = roughly 10%.
 
-           10 artists
-           = roughly 10% of arrows named.
-
-           100 artists
-           = roughly 100% of arrows named.
+           Empty cells are never included.
         */
 
         for (
@@ -733,7 +816,7 @@ function createArrow(
 
     /*
        Put the guaranteed artist
-       somewhere early in the journey.
+       somewhere near the beginning.
     */
 
     if (
@@ -817,11 +900,11 @@ function buildForest() {
 
 
     /*
-       GUARANTEED NAMED ARROW
+       GUARANTEED NAMED ARROW.
 
-       This is placed early in the forest
-       so visitors don't have to scroll
-       forever before seeing one.
+       This means there will always be
+       at least one artist name near the
+       beginning of the journey.
     */
 
     if (
@@ -839,10 +922,10 @@ function buildForest() {
 
 
     /*
-       CREATE ALL REMAINING ARROWS.
+       CREATE REMAINING ARROWS.
 
-       Each artist has an independent
-       1% chance per arrow.
+       Each artist has a 1% chance
+       on every arrow.
     */
 
     const startIndex =
@@ -1007,9 +1090,6 @@ function drawArrow(
 
     /*
        Mirror right-side arrows.
-
-       The arrow itself therefore travels
-       from right to left.
     */
 
     if (
@@ -1110,16 +1190,6 @@ function drawArrow(
     ctx.closePath();
 
 
-    /*
-       IMPORTANT:
-
-       The arrowhead uses the exact same
-       colour as the shaft.
-
-       The artist highlight is drawn later,
-       away from the arrowhead.
-    */
-
     ctx.fill();
 
 
@@ -1133,11 +1203,8 @@ function drawArrow(
 
 
         /*
-           Position the name well before
-           the arrowhead.
-
-           This is measured from the
-           arrow's own direction.
+           Keep the name well away
+           from the arrowhead.
         */
 
         const textX =
@@ -1188,18 +1255,8 @@ function drawArrow(
 
 
         /*
-           RIGHT-SIDE FIX
-
-           The arrow is mirrored.
-
-           We cancel that mirror for the
-           text so the artist name reads
-           normally.
-
-           Because the arrow is travelling
-           leftwards, the text position must
-           also be mirrored to the negative
-           side of the origin.
+           Cancel the arrow mirror so
+           the name reads normally.
         */
 
         if (
@@ -1310,11 +1367,16 @@ function drawForest() {
 
 
     /* =================================================
-       SCROLL
+       PAGE SCROLL + AUTO SCROLL
        ================================================= */
 
     const pageScroll =
         window.scrollY;
+
+
+    const forestScroll =
+        pageScroll +
+        autoScroll;
 
 
     /* =================================================
@@ -1343,7 +1405,7 @@ function drawForest() {
 
         drawArrow(
             arrow,
-            pageScroll
+            forestScroll
         );
 
     }
@@ -1356,6 +1418,9 @@ function drawForest() {
    ===================================================== */
 
 function animationLoop() {
+
+    updateAutoScroll();
+
 
     drawForest();
 
@@ -1441,7 +1506,6 @@ window.addEventListener(
             currentScroll;
 
     }
-
 
 );
 
