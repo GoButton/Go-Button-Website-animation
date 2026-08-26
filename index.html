@@ -429,7 +429,7 @@ main {
 
 
 /* =====================================================
-   EMPTY / LOADING MESSAGE
+   LOADING
    ===================================================== */
 
 #loading {
@@ -535,7 +535,8 @@ footer a:hover {
 
     .hero {
 
-        min-height: 60vh;
+        min-height:
+            60vh;
 
         padding-top:
             70px;
@@ -712,9 +713,7 @@ footer a:hover {
 /*
    Published Google Sheet.
 
-   IMPORTANT:
-   Replace the gid below with the gid of your
-   HOME / INDEX sheet if it is different.
+   This is the published CSV version of the spreadsheet.
 */
 
 const SHEET_URL =
@@ -732,11 +731,6 @@ const MAX_GIGS =
 /* =====================================================
    CSV PARSER
    ===================================================== */
-
-/*
-   This handles commas inside quoted cells
-   as well as normal spreadsheet data.
-*/
 
 function parseCSV(csv) {
 
@@ -757,7 +751,6 @@ function parseCSV(csv) {
 
         const char =
             csv[i];
-
 
         const nextChar =
             csv[i + 1];
@@ -843,10 +836,6 @@ function parseCSV(csv) {
 
     }
 
-
-    /*
-       Add final cell/row.
-    */
 
     if (
         cell !== "" ||
@@ -950,7 +939,7 @@ async function loadGigs() {
 
 
         /*
-           First row contains headings.
+           First row is the headings.
         */
 
         const dataRows =
@@ -958,7 +947,8 @@ async function loadGigs() {
 
 
         /*
-           Remove completely empty rows.
+           Ignore completely empty rows.
+           Then take the first 24 actual gigs.
         */
 
         const validRows =
@@ -973,26 +963,19 @@ async function loadGigs() {
 
 
         /*
-           Clear loading message.
+           Remove loading message.
         */
 
         container.innerHTML = "";
 
 
         /*
-           If there are no gigs,
-           show a simple message.
+           No gigs = leave the section empty.
         */
 
         if (
             validRows.length === 0
         ) {
-
-            container.innerHTML = `
-                <div id="loading">
-                    No upcoming gigs yet.
-                </div>
-            `;
 
             return;
 
@@ -1000,7 +983,7 @@ async function loadGigs() {
 
 
         /*
-           Create every gig.
+           Create each gig.
         */
 
         validRows.forEach(
@@ -1019,17 +1002,26 @@ async function loadGigs() {
 
     catch (error) {
 
+        /*
+           IMPORTANT:
+
+           This is the live website.
+
+           If Google Sheets cannot be reached,
+           leave the gig section completely blank.
+
+           The error is still written to the
+           browser console for troubleshooting,
+           but visitors will not see it.
+        */
+
         console.error(
             "Google Sheets error:",
             error
         );
 
 
-        container.innerHTML = `
-            <div id="loading">
-                ERROR — could not connect to Google Sheets.
-            </div>
-        `;
+        container.innerHTML = "";
 
     }
 
@@ -1098,7 +1090,7 @@ function createGigBlock(
 
 
     /*
-       Create block.
+       Create gig block.
     */
 
     const gig =
@@ -1124,11 +1116,6 @@ function createGigBlock(
     headliners.className =
         "headliners";
 
-
-    /*
-       Only create elements when
-       actual information exists.
-    */
 
     if (
         headliner !== ""
@@ -1179,11 +1166,6 @@ function createGigBlock(
 
     }
 
-
-    /*
-       Only add the headliner container
-       if it contains something.
-    */
 
     if (
         headliners.children.length > 0
@@ -1367,8 +1349,7 @@ function createGigBlock(
 
 
     /*
-       Add the finished gig to
-       the grid.
+       Add finished gig to grid.
     */
 
     container.appendChild(
