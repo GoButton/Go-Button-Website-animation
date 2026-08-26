@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Go Button music</title>
+
+
+<style>
+
+/* =====================================================
+   GLOBAL
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+
+    min-height: 100%;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #ea9a99;
+
+    color: #000000;
+}
+
+
+body {
+
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   ARROW FOREST
+   ===================================================== */
+
+#forest {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 0;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   WEBSITE
+   ===================================================== */
+
+#site {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+
+nav {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 28px;
+
+    background: #ffffff;
+
+    transition:
+        transform 0.35s ease,
+        opacity 0.35s ease;
+}
+
+
+nav.hidden {
+
+    transform:
+        translateY(-110%);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+}
+
+
+.nav-links a {
+
+    color: #000000;
+
+    background: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    padding: 4px 7px;
+}
+
+
+.nav-links a:hover {
+
+    background: #000000;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   MAIN
+   ===================================================== */
+
+main {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding:
+        100px 30px 140px;
+}
+
+
+/* =====================================================
+   HERO
+   ===================================================== */
+
+.hero {
+
+    min-height: 65vh;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    text-align: center;
+
+    padding-top: 100px;
+
+    padding-bottom: 80px;
+}
+
+
+.logo {
+
+    display: inline-block;
+
+    background: #ffffff;
+
+    color: #000000;
+
+    padding: 12px 18px;
+
+    font-size:
+        clamp(
+            42px,
+            9vw,
+            110px
+        );
+
+    line-height: 0.95;
+
+    letter-spacing: -4px;
+}
+
+
+.logo strong {
+
+    font-weight: 700;
+
+    font-style: italic;
+}
+
+
+.logo span {
+
+    font-weight: 400;
+}
+
+
+/* =====================================================
+   GIG GRID
+   ===================================================== */
+
+#gigs {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:
+        35px 35px;
+
+    padding:
+        0 10px;
+}
+
+
+/* =====================================================
+   GIG BLOCK
+   ===================================================== */
+
+.gig {
+
+    width: 100%;
+
+    background: #ffffff;
+
+    color: #000000;
+
+    padding:
+        28px 30px 30px;
+
+    text-align: center;
+
+    min-height: 260px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =====================================================
+   HEADLINERS
+   ===================================================== */
+
+.headliners {
+
+    width: 100%;
+
+    margin-bottom: 18px;
+}
+
+
+.headliner {
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            48px
+        );
+
+    line-height: 1;
+
+    font-weight: bold;
+
+    margin:
+        3px 0;
+}
+
+
+.headliner-2 {
+
+    font-size:
+        clamp(
+            22px,
+            3vw,
+            36px
+        );
+
+    line-height: 1.05;
+
+    font-weight: bold;
+
+    margin:
+        5px 0;
+}
+
+
+/* =====================================================
+   SUPPORT
+   ===================================================== */
+
+.support {
+
+    width: 100%;
+
+    margin-bottom: 20px;
+}
+
+
+.support-line {
+
+    font-size: 17px;
+
+    line-height: 1.3;
+
+    font-weight: normal;
+
+    margin:
+        3px 0;
+}
+
+
+/* =====================================================
+   VENUE
+   ===================================================== */
+
+.venue {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-top: 8px;
+}
+
+
+/* =====================================================
+   DATE
+   ===================================================== */
+
+.date {
+
+    font-size: 17px;
+
+    margin-top: 6px;
+}
+
+
+/* =====================================================
+   TICKET BUTTON
+   ===================================================== */
+
+.ticket-button {
+
+    display: inline-block;
+
+    margin-top: 24px;
+
+    padding:
+        9px 15px;
+
+    background: #000000;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+
+.ticket-button:hover {
+
+    background: #ea9a99;
+
+    color: #000000;
+}
+
+
+/* =====================================================
+   EMPTY / LOADING MESSAGE
+   ===================================================== */
+
+#loading {
+
+    width: 100%;
+
+    text-align: center;
+
+    padding:
+        30px;
+
+    background: #ffffff;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+footer {
+
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+
+    min-height: 90px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background: #ffffff;
+}
+
+
+footer a {
+
+    display: inline-block;
+
+    background: #ffffff;
+
+    color: #000000;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    padding:
+        6px 10px;
+}
+
+
+footer a:hover {
+
+    background: #000000;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    nav {
+
+        padding:
+            15px;
+    }
+
+
+    .nav-links {
+
+        gap:
+            8px;
+    }
+
+
+    .nav-links a {
+
+        font-size:
+            13px;
+    }
+
+
+    main {
+
+        padding:
+            50px 15px 100px;
+    }
+
+
+    .hero {
+
+        min-height: 60vh;
+
+        padding-top:
+            70px;
+
+        padding-bottom:
+            60px;
+    }
+
+
+    .logo {
+
+        font-size:
+            48px;
+
+        letter-spacing:
+            -2px;
+    }
+
+
+    #gigs {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            25px;
+
+        padding:
+            0;
+    }
+
+
+    .gig {
+
+        min-height:
+            240px;
+
+        padding:
+            25px 20px;
+    }
+
+
+    .headliner {
+
+        font-size:
+            32px;
+    }
+
+
+    .headliner-2 {
+
+        font-size:
+            26px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================
+     ARROW FOREST
+     =================================================== -->
+
+<canvas id="forest"></canvas>
+
+
+<!-- ===================================================
+     WEBSITE
+     =================================================== -->
+
+<div id="site">
+
+
+<!-- ===================================================
+     NAVIGATION
+     =================================================== -->
+
+<nav id="main-nav">
+
+    <div class="nav-links">
+
+        <a href="./index.html">
+            HOME
+        </a>
+
+        <a href="./play-with-us.html">
+            PLAY WITH US
+        </a>
+
+        <a href="./safer-spaces.html">
+            SAFER SPACES
+        </a>
+
+        <a href="./about.html">
+            ABOUT
+        </a>
+
+        <a href="./hall-of-fame.html">
+            HALL OF FAME
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ===================================================
+     MAIN
+     =================================================== -->
+
+<main>
+
+
+<section class="hero">
+
+    <div class="logo">
+
+        <strong>Go Button</strong>
+        <span> music</span>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================
+     GIGS
+     =================================================== -->
+
+<section id="gigs">
+
+    <div id="loading">
+        Loading gigs...
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ===================================================
+     FOOTER
+     =================================================== -->
+
+<footer>
+
+    <a
+        href="https://www.instagram.com/gobuttonmusic"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        INSTAGRAM
+    </a>
+
+</footer>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GOOGLE SHEETS
+   ===================================================== */
+
+/*
+   Published Google Sheet.
+
+   IMPORTANT:
+   Replace the gid below with the gid of your
+   HOME / INDEX sheet if it is different.
+*/
+
+const SHEET_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vROCpvGvyzvKRuWzaHYeo6y0mYfdvpEOnctgL0HM26KjWEPy7PAl16ChP0IT2MD6pTxt2mJ0hH0x40s/pub?output=csv";
+
+
+/* =====================================================
+   GIG LIMIT
+   ===================================================== */
+
+const MAX_GIGS =
+    24;
+
+
+/* =====================================================
+   CSV PARSER
+   ===================================================== */
+
+/*
+   This handles commas inside quoted cells
+   as well as normal spreadsheet data.
+*/
+
+function parseCSV(csv) {
+
+    const rows = [];
+
+    let row = [];
+
+    let cell = "";
+
+    let insideQuotes = false;
+
+
+    for (
+        let i = 0;
+        i < csv.length;
+        i++
+    ) {
+
+        const char =
+            csv[i];
+
+
+        const nextChar =
+            csv[i + 1];
+
+
+        if (
+            char === '"' &&
+            insideQuotes &&
+            nextChar === '"'
+        ) {
+
+            cell += '"';
+
+            i++;
+
+        }
+
+
+        else if (
+            char === '"'
+        ) {
+
+            insideQuotes =
+                !insideQuotes;
+
+        }
+
+
+        else if (
+            char === "," &&
+            !insideQuotes
+        ) {
+
+            row.push(
+                cell.trim()
+            );
+
+            cell = "";
+
+        }
+
+
+        else if (
+            (
+                char === "\n" ||
+                char === "\r"
+            ) &&
+            !insideQuotes
+        ) {
+
+            if (
+                char === "\r" &&
+                nextChar === "\n"
+            ) {
+
+                i++;
+
+            }
+
+
+            row.push(
+                cell.trim()
+            );
+
+
+            rows.push(
+                row
+            );
+
+
+            row = [];
+
+            cell = "";
+
+        }
+
+
+        else {
+
+            cell += char;
+
+        }
+
+    }
+
+
+    /*
+       Add final cell/row.
+    */
+
+    if (
+        cell !== "" ||
+        row.length > 0
+    ) {
+
+        row.push(
+            cell.trim()
+        );
+
+        rows.push(
+            row
+        );
+
+    }
+
+
+    return rows;
+
+}
+
+
+/* =====================================================
+   CLEAN CELL
+   ===================================================== */
+
+function cleanCell(value) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .trim();
+
+}
+
+
+/* =====================================================
+   CHECK WHETHER A ROW HAS DATA
+   ===================================================== */
+
+function rowHasData(row) {
+
+    return row.some(
+        function(cell) {
+
+            return (
+                cleanCell(cell) !== ""
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOAD GIGS
+   ===================================================== */
+
+async function loadGigs() {
+
+    const container =
+        document.getElementById(
+            "gigs"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                SHEET_URL
+            );
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "Could not connect to Google Sheets."
+            );
+
+        }
+
+
+        const csv =
+            await response.text();
+
+
+        const rows =
+            parseCSV(csv);
+
+
+        /*
+           First row contains headings.
+        */
+
+        const dataRows =
+            rows.slice(1);
+
+
+        /*
+           Remove completely empty rows.
+        */
+
+        const validRows =
+            dataRows
+                .filter(
+                    rowHasData
+                )
+                .slice(
+                    0,
+                    MAX_GIGS
+                );
+
+
+        /*
+           Clear loading message.
+        */
+
+        container.innerHTML = "";
+
+
+        /*
+           If there are no gigs,
+           show a simple message.
+        */
+
+        if (
+            validRows.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div id="loading">
+                    No upcoming gigs yet.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        /*
+           Create every gig.
+        */
+
+        validRows.forEach(
+            function(row) {
+
+                createGigBlock(
+                    row,
+                    container
+                );
+
+            }
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Google Sheets error:",
+            error
+        );
+
+
+        container.innerHTML = `
+            <div id="loading">
+                ERROR — could not connect to Google Sheets.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   CREATE GIG BLOCK
+   ===================================================== */
+
+function createGigBlock(
+    row,
+    container
+) {
+
+
+    /*
+       Spreadsheet columns:
+
+       0 = headliner
+       1 = headliner 2
+       2 = support 1
+       3 = support 2
+       4 = support 3
+       5 = venue
+       6 = date
+       7 = ticket text
+       8 = ticket URL
+    */
+
+
+    const headliner =
+        cleanCell(row[0]);
+
+
+    const headliner2 =
+        cleanCell(row[1]);
+
+
+    const support1 =
+        cleanCell(row[2]);
+
+
+    const support2 =
+        cleanCell(row[3]);
+
+
+    const support3 =
+        cleanCell(row[4]);
+
+
+    const venue =
+        cleanCell(row[5]);
+
+
+    const date =
+        cleanCell(row[6]);
+
+
+    const ticketText =
+        cleanCell(row[7]);
+
+
+    const ticketURL =
+        cleanCell(row[8]);
+
+
+    /*
+       Create block.
+    */
+
+    const gig =
+        document.createElement(
+            "article"
+        );
+
+
+    gig.className =
+        "gig";
+
+
+    /* =================================================
+       HEADLINERS
+       ================================================= */
+
+    const headliners =
+        document.createElement(
+            "div"
+        );
+
+
+    headliners.className =
+        "headliners";
+
+
+    /*
+       Only create elements when
+       actual information exists.
+    */
+
+    if (
+        headliner !== ""
+    ) {
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "headliner";
+
+
+        element.textContent =
+            headliner;
+
+
+        headliners.appendChild(
+            element
+        );
+
+    }
+
+
+    if (
+        headliner2 !== ""
+    ) {
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "headliner-2";
+
+
+        element.textContent =
+            headliner2;
+
+
+        headliners.appendChild(
+            element
+        );
+
+    }
+
+
+    /*
+       Only add the headliner container
+       if it contains something.
+    */
+
+    if (
+        headliners.children.length > 0
+    ) {
+
+        gig.appendChild(
+            headliners
+        );
+
+    }
+
+
+    /* =================================================
+       SUPPORT
+       ================================================= */
+
+    const supportValues = [
+
+        support1,
+        support2,
+        support3
+
+    ];
+
+
+    const validSupport =
+        supportValues.filter(
+            function(value) {
+
+                return value !== "";
+
+            }
+        );
+
+
+    if (
+        validSupport.length > 0
+    ) {
+
+        const support =
+            document.createElement(
+                "div"
+            );
+
+
+        support.className =
+            "support";
+
+
+        validSupport.forEach(
+            function(name) {
+
+                const element =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                element.className =
+                    "support-line";
+
+
+                element.textContent =
+                    name;
+
+
+                support.appendChild(
+                    element
+                );
+
+            }
+        );
+
+
+        gig.appendChild(
+            support
+        );
+
+    }
+
+
+    /* =================================================
+       VENUE
+       ================================================= */
+
+    if (
+        venue !== ""
+    ) {
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "venue";
+
+
+        element.textContent =
+            venue;
+
+
+        gig.appendChild(
+            element
+        );
+
+    }
+
+
+    /* =================================================
+       DATE
+       ================================================= */
+
+    if (
+        date !== ""
+    ) {
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "date";
+
+
+        element.textContent =
+            date;
+
+
+        gig.appendChild(
+            element
+        );
+
+    }
+
+
+    /* =================================================
+       TICKET BUTTON
+       ================================================= */
+
+    if (
+        ticketURL !== ""
+    ) {
+
+        const button =
+            document.createElement(
+                "a"
+            );
+
+
+        button.className =
+            "ticket-button";
+
+
+        button.href =
+            ticketURL;
+
+
+        button.target =
+            "_blank";
+
+
+        button.rel =
+            "noopener noreferrer";
+
+
+        button.textContent =
+            ticketText !== ""
+            ? ticketText
+            : "TICKETS";
+
+
+        gig.appendChild(
+            button
+        );
+
+    }
+
+
+    /*
+       Add the finished gig to
+       the grid.
+    */
+
+    container.appendChild(
+        gig
+    );
+
+}
+
+
+/* =====================================================
+   START GOOGLE SHEET
+   ===================================================== */
+
+loadGigs();
+
+
+/* =====================================================
+   CANVAS
+   ===================================================== */
+
+const canvas =
+    document.getElementById(
+        "forest"
+    );
+
+
+const ctx =
+    canvas.getContext(
+        "2d"
+    );
+
+
+function resizeCanvas() {
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        window.innerWidth *
+        dpr;
+
+
+    canvas.height =
+        window.innerHeight *
+        dpr;
+
+
+    canvas.style.width =
+        window.innerWidth +
+        "px";
+
+
+    canvas.style.height =
+        window.innerHeight +
+        "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+}
+
+
+resizeCanvas();
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+/* =====================================================
+   COLOURS
+   ===================================================== */
+
+const colours = [
+
+    "#f4cbcc",
+    "#d9ead3",
+    "#fff2cc",
+    "#c9daf8"
+
+];
+
+
+/* =====================================================
+   FOREST SETTINGS
+   ===================================================== */
+
+const ARROW_COUNT =
+    500;
+
+
+const FOREST_HEIGHT =
+    50000;
+
+
+const EXTRA_LENGTH =
+    3000;
+
+
+/* =====================================================
+   CREATE ARROW
+   ===================================================== */
+
+function createArrow() {
+
+    return {
+
+        side:
+            Math.random() < 0.5
+            ? "left"
+            : "right",
+
+
+        position:
+            Math.random()
+            * FOREST_HEIGHT,
+
+
+        depth:
+            Math.random(),
+
+
+        length:
+            1500 +
+            Math.random() * 3000,
+
+
+        width:
+            30 +
+            Math.random() * 30,
+
+
+        headSize:
+            65 +
+            Math.random() * 55,
+
+
+        angle:
+            -0.16 +
+            Math.random() * 0.32,
+
+
+        colour:
+            colours[
+                Math.floor(
+                    Math.random()
+                    * colours.length
+                )
+            ]
+
+    };
+
+}
+
+
+/* =====================================================
+   BUILD FOREST
+   ===================================================== */
+
+const arrows = [];
+
+
+for (
+    let i = 0;
+    i < ARROW_COUNT;
+    i++
+) {
+
+    arrows.push(
+        createArrow()
+    );
+
+}
+
+
+/* =====================================================
+   DRAW ARROW
+   ===================================================== */
+
+function drawArrow(
+    arrow,
+    forestScroll
+) {
+
+    const width =
+        window.innerWidth;
+
+
+    const height =
+        window.innerHeight;
+
+
+    const parallax =
+        0.08 +
+        arrow.depth * 0.62;
+
+
+    const scale =
+        0.45 +
+        arrow.depth * 1.25;
+
+
+    const length =
+        arrow.length *
+        scale;
+
+
+    const lineWidth =
+        arrow.width *
+        scale;
+
+
+    const headSize =
+        arrow.headSize *
+        scale;
+
+
+    let y =
+        arrow.position -
+        forestScroll *
+        parallax;
+
+
+    const wrap =
+        FOREST_HEIGHT +
+        height +
+        5000;
+
+
+    y =
+        (
+            y % wrap +
+            wrap
+        ) % wrap;
+
+
+    y -= 2500;
+
+
+    if (
+        y < -5000 ||
+        y > height + 5000
+    ) {
+
+        return;
+
+    }
+
+
+    let x;
+
+
+    if (
+        arrow.side === "left"
+    ) {
+
+        x =
+            -EXTRA_LENGTH;
+
+    }
+
+    else {
+
+        x =
+            width +
+            EXTRA_LENGTH;
+
+    }
+
+
+    ctx.save();
+
+
+    ctx.translate(
+        x,
+        y
+    );
+
+
+    if (
+        arrow.side === "right"
+    ) {
+
+        ctx.scale(
+            -1,
+            1
+        );
+
+    }
+
+
+    ctx.rotate(
+        arrow.angle
+    );
+
+
+    ctx.globalAlpha =
+        1;
+
+
+    ctx.fillStyle =
+        arrow.colour;
+
+
+    ctx.strokeStyle =
+        arrow.colour;
+
+
+    ctx.lineWidth =
+        lineWidth;
+
+
+    ctx.lineCap =
+        "butt";
+
+
+    /* SHAFT */
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        0,
+        0
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize * 0.65,
+        0
+    );
+
+
+    ctx.stroke();
+
+
+    /* ARROW HEAD */
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        length,
+        0
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize,
+        -headSize
+    );
+
+
+    ctx.lineTo(
+        length -
+        headSize,
+        headSize
+    );
+
+
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW FOREST
+   ===================================================== */
+
+function drawForest() {
+
+    const width =
+        window.innerWidth;
+
+
+    const height =
+        window.innerHeight;
+
+
+    ctx.fillStyle =
+        "#ea9a99";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    arrows.sort(
+        function(a, b) {
+
+            return (
+                a.depth -
+                b.depth
+            );
+
+        }
+    );
+
+
+    const pageScroll =
+        window.scrollY;
+
+
+    for (
+        const arrow of arrows
+    ) {
+
+        drawArrow(
+            arrow,
+            pageScroll
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ANIMATION
+   ===================================================== */
+
+function animationLoop() {
+
+    drawForest();
+
+
+    requestAnimationFrame(
+        animationLoop
+    );
+
+}
+
+
+animationLoop();
+
+
+/* =====================================================
+   NAVIGATION VISIBILITY
+   ===================================================== */
+
+const nav =
+    document.getElementById(
+        "main-nav"
+    );
+
+
+let lastScroll =
+    window.scrollY;
+
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+        const currentScroll =
+            window.scrollY;
+
+
+        if (
+            currentScroll <= 20
+        ) {
+
+            nav.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        else if (
+            currentScroll >
+            lastScroll
+        ) {
+
+            nav.classList.add(
+                "hidden"
+            );
+
+        }
+
+
+        else {
+
+            nav.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        lastScroll =
+            currentScroll;
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>
